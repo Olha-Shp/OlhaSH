@@ -1,6 +1,7 @@
-import Pages.compareProduct;
-import Pages.mainPage;
-import Pages.oneProduct;
+import org.example.Pages.compareProduct;
+import org.example.Pages.mainPage;
+import org.example.Pages.oneProduct;
+import io.qameta.allure.testng.AllureTestNg;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -11,14 +12,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 import java.util.List;
 
-import static Pages.compareProduct.*;
+import static org.example.Pages.compareProduct.*;
 import static org.testng.Assert.assertEquals;
 
+@Listeners({AllureTestNg.class})
 public class MyTest {
     private WebDriver driver;
     private WebDriverWait wait;
@@ -28,9 +31,9 @@ public class MyTest {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-notifications");
-//        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("--disable-blink-features=AutomationControlled");
         driver = new ChromeDriver(options);
-        driver.get("https://www.mediaexpert.pl/");
+        driver.get("https://zoolandia.com.ua/ua/");
         wait = new WebDriverWait(driver, Duration.ofSeconds(25));
         mainPage mainPage = new mainPage(driver);
         compareProduct compareProduct = new compareProduct(driver);
@@ -41,22 +44,20 @@ public class MyTest {
 
     @Test
     public void loginTest() {
-        mainPage.clickOnCookiesBar();
         mainPage.clickOnLoginButton();
         mainPage.enterMail();
         mainPage.enterPassword();
         mainPage.clickOnSubmitButton();
-        String expectedErrorMessage = "Nieprawidłowa nazwa użytkownika lub hasło.";
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='alert-content']")));
+        String expectedErrorMessage = "Невірний логін або пароль";
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='has-error text-center'] span")));
         assertEquals(mainPage.errorMessage.getText(), expectedErrorMessage, "Error message is not equal");
 
     }
 
     @Test
 public void compareTest(){
-        compareProduct.navigateTo("https://www.mediaexpert.pl/agd-do-zabudowy");
-        compareProduct.clickOnCookiesBar();
         compareProduct.clickProductCategory();
+        compareProduct.clickSubCategory();
         compareProduct.chooseProduct1();
         compareProduct.chooseProduct2();
         compareProduct.clickCompare2Products();
@@ -67,12 +68,9 @@ public void compareTest(){
 
     @Test
     public void oneProductSelection(){
-        oneProduct.clickOnCookiesBar();
-        oneProduct.clickGaming();
-        oneProduct.clickConsoles();
-        oneProduct.getMoreFilters();
-        oneProduct.chooseLogitech();
-        oneProduct.clickFilters();
+        oneProduct.clickReptiles();
+        oneProduct.clickReptileFood();
+        oneProduct.choosePryroda();
         WebElement selectedProduct = oneProduct.selectProductByIndex(0);
         List<WebElement> selectedProducts = oneProduct.getSelectedProducts();
         assertEquals(selectedProducts.size(), 1, "Size of selection is not equal to 1");
@@ -83,7 +81,7 @@ public void compareTest(){
 
     @AfterTest
     void closeDriver(){
-        driver.quit();
+       driver.quit();
 
     }
 }

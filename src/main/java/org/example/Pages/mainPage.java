@@ -1,4 +1,4 @@
-package Pages;
+package org.example.Pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,14 +19,9 @@ public class mainPage {
         PageFactory.initElements(driver,this);
 
     }
-    @FindBy(xpath = "//*[@id=\"onetrust-accept-btn-handler\"]")
-    public static WebElement cookiesBar;
 
-    public static void clickOnCookiesBar(){
-        wait.until(ExpectedConditions.elementToBeClickable(cookiesBar)).click();
-    }
 
-    @FindBy(xpath = "//span[@class='title is-regular']")
+    @FindBy(xpath = "//a[contains(text(),'Кабінет')]")
     public static WebElement loginButton;
 
     public static void clickOnLoginButton(){
@@ -34,28 +29,28 @@ public class mainPage {
     }
 
 
-    @FindBy(xpath = "//input[@type='email']")
+    @FindBy(xpath = "//input[@name='data[email]']")
     public static WebElement mailInput;
     public static void enterMail(){
         mailInput.sendKeys("javamakesmecry@gmail.com");
 
     }
-    @FindBy(xpath = "//input[@type='password']")
+    @FindBy(xpath = "//input[@name='data[password]']")
     public static WebElement passwordInput;
     public static void enterPassword(){
         passwordInput.sendKeys("123456");
     }
 
-    @FindBy(xpath = "//button[@class='spark-button submit is-primary is-default icon-left is-new-loading']")
+    @FindBy(xpath = "//input[@value='Увійти']")
     public static WebElement submitButton;
 
     public static void clickOnSubmitButton(){
         wait.until(ExpectedConditions.elementToBeClickable(submitButton)).click();
     }
 
-    @FindBy(xpath = "//div[@class='alert-content']")
+    @FindBy(css = "div[class='has-error text-center'] span")
     public static WebElement errorMessage;
-    String ExpectedErrorMessage = "Nieprawidłowa nazwa użytkownika lub hasło.";
+    String ExpectedErrorMessage = "Невірний логін або пароль";
     public static void getTextErrorMessage(){
         System.out.printf(errorMessage.getText());
     }
