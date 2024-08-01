@@ -34,7 +34,7 @@ public class MyTest {
         options.addArguments("--disable-blink-features=AutomationControlled");
         driver = new ChromeDriver(options);
         driver.get("https://zoolandia.com.ua/ua/");
-        wait = new WebDriverWait(driver, Duration.ofSeconds(25));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(35));
         mainPage mainPage = new mainPage(driver);
         compareProduct compareProduct = new compareProduct(driver);
         oneProduct oneProduct = new oneProduct(driver);

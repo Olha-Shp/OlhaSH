@@ -19,7 +19,7 @@ public class compareProduct {
 
     public compareProduct(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(35));
         PageFactory.initElements(driver, this);
 
     }
@@ -73,9 +73,7 @@ public class compareProduct {
 
     public static void clickCompare2Products() {
         scrollToTop();
-        wait.until(ExpectedConditions.elementToBeClickable(compare2Products)).click();
-
-
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"wishlist-widget\"]/a"))).click();
     }
 
     public static List<WebElement> getSelectedProducts() {
