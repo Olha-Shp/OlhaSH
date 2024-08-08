@@ -75,5 +75,4 @@ void unsuccessfulLogin(){
             .body("name", equalTo("morpheus"), "job", equalTo("zion resident"));
 }
 
-
 }
